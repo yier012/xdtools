@@ -1,0 +1,74 @@
+.loading-text {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #1E1E2E;
+  border-radius: 14px;
+  padding: 12px 16px;
+}
+
+.member-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #33324A;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.member-bday {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.member-countdown {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.member-countdown .num {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--yellow);
+}
+
+.member-countdown .unit {
+  font-size: 12px;
+  margin-left: 2px;
+  color: var(--muted);
+}
+
+.member-countdown.today {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--yellow);
+}
