@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XDT工具包</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <h1 class="logo">XDT工具包</h1>
+        <p class="greeting" id="greeting"></p>
+      </div>
+
+      <!-- 設定齒輪 = 通往後台管理入口 -->
+      <a href="admin.html" class="settings-btn" aria-label="後台管理">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </a>
+    </header>
+
+    <main class="grid">
+
+      <a href="birthday.html" class="card card--yellow" style="--rotate: -2deg;">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path>
+            <path d="M4 16h16"></path>
+            <path d="M12 11V7"></path>
+            <path d="M9 7c0-1 .5-2 1.5-2.5C11 4 12 3 12 2c0 1 1 2 1.5 2.5C14.5 5 15 6 15 7"></path>
+          </svg>
+        </span>
+        <span class="card-title">生日倒數</span>
+        <span class="card-sub" id="birthday-preview">看看最近是誰壽星</span>
+      </a>
+
+      <a href="car-split.html" class="card card--coral" style="--rotate: 2deg;">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"></path>
+            <path d="M3 17V11l2-5h14l2 5v6"></path>
+            <path d="M3 11h18"></path>
+          </svg>
+        </span>
+        <span class="card-title">分車器</span>
+        <span class="card-sub">抽座位囉</span>
+      </a>
+
+      <a href="wheel.html" class="card card--sky" style="--rotate: -1.5deg;">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3v9l6.4 3.7"></path>
+          </svg>
+        </span>
+        <span class="card-title">轉盤 / 抽獎</span>
+        <span class="card-sub">今天誰倒楣</span>
+      </a>
+
+      <div class="card card--soon" style="--rotate: 1.5deg;" aria-disabled="true">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"></path>
+            <path d="M12 17h.01"></path>
+          </svg>
+        </span>
+        <span class="card-title">敬請期待</span>
+        <span class="card-sub">下一個功能還在想</span>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

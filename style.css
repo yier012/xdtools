@@ -1,0 +1,148 @@
+:root {
+  --bg: #283345;
+  --card-radius: 18px;
+  --ink: #F5F2EA;
+  --muted: #9A98A8;
+
+  --yellow: #FFD23F;
+  --yellow-text: #412402;
+  --yellow-sub: #633806;
+
+  --coral: #FF6F59;
+  --coral-text: #4A1B0C;
+  --coral-sub: #712B13;
+
+  --sky: #4FC3E8;
+  --sky-text: #042C53;
+  --sky-sub: #0C447C;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: "Noto Sans TC", sans-serif;
+  color: var(--ink);
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 56px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.greeting {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.settings-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #3A3A4A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.settings-btn:hover {
+  color: var(--ink);
+  border-color: #55536A;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--card-radius);
+  text-decoration: none;
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: rotate(var(--rotate, 0deg)) translateY(-2px);
+}
+
+.card-icon {
+  display: flex;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.card-sub {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: -6px;
+}
+
+.card--yellow {
+  background: var(--yellow);
+  color: var(--yellow-text);
+}
+.card--yellow .card-sub { color: var(--yellow-sub); }
+
+.card--coral {
+  background: var(--coral);
+  color: var(--coral-text);
+}
+.card--coral .card-sub { color: var(--coral-sub); }
+
+.card--sky {
+  background: var(--sky);
+  color: var(--sky-text);
+}
+.card--sky .card-sub { color: var(--sky-sub); }
+
+.card--soon {
+  background: transparent;
+  border: 1.5px dashed #3A3A4A;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+.card--soon .card-sub {
+  color: #6E6C7C;
+}
+
+@media (min-width: 560px) {
+  .page {
+    padding-top: 48px;
+  }
+  .logo {
+    font-size: 26px;
+  }
+}
