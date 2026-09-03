@@ -4,15 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>分車器 - XD團工具箱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="car-split.css">
 </head>
 <body>
+
   <div class="page">
     <header class="topbar">
       <div>
         <h1 class="logo">分車器</h1>
-        <p class="greeting">這頁還在蓋,晚點回來看看</p>
+        <p class="greeting">駕駛固定,其他人隨機分配</p>
       </div>
       <a href="index.html" class="settings-btn" aria-label="回首頁">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -20,6 +24,32 @@
         </svg>
       </a>
     </header>
+
+    <main>
+      <p id="loading-text" class="loading-text">名單載入中...</p>
+
+      <div id="cars-view" class="cars-view" hidden>
+        <div class="car-box car-box--yellow">
+          <div class="car-driver-label">1號車駕駛</div>
+          <div class="car-driver-name" id="driver-a-name">-</div>
+          <div class="car-divider"></div>
+          <div id="car-a-passengers" class="car-passenger-list"></div>
+        </div>
+
+        <div class="car-box car-box--sky">
+          <div class="car-driver-label">2號車駕駛</div>
+          <div class="car-driver-name" id="driver-b-name">-</div>
+          <div class="car-divider"></div>
+          <div id="car-b-passengers" class="car-passenger-list"></div>
+        </div>
+
+        <button type="button" id="split-btn" class="split-btn">分車！</button>
+      </div>
+
+      <p id="setup-error" class="setup-error"></p>
+    </main>
   </div>
+
+  <script src="car-split.js"></script>
 </body>
 </html>

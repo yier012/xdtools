@@ -1,0 +1,88 @@
+.loading-text {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.cars-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.car-box {
+  border-radius: 18px;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.car-box--yellow {
+  background: var(--yellow);
+  color: var(--yellow-text);
+}
+
+.car-box--sky {
+  background: var(--sky);
+  color: var(--sky-text);
+}
+
+.car-driver-label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.car-driver-name {
+  font-size: 22px;
+  font-weight: 900;
+  margin-top: 2px;
+}
+
+.car-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+  margin: 14px 0;
+}
+
+.car-passenger-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 24px;
+  font-size: 14px;
+}
+
+.car-passenger-list:empty::before {
+  content: "按下面「分車！」開始";
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.split-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #F5F2EA;
+  color: #14141F;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.setup-error {
+  color: var(--coral);
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+@media (min-width: 560px) {
+  .cars-view {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .car-box {
+    flex: 1 1 260px;
+  }
+  .split-btn {
+    flex-basis: 100%;
+  }
+}

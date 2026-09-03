@@ -49,7 +49,7 @@
 
 .edit-list-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 56px;
+  grid-template-columns: 1fr 1fr 130px 70px 56px;
   gap: 8px;
   padding: 0 10px;
   margin-bottom: 8px;
@@ -65,12 +65,21 @@
 
 .edit-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 56px;
+  grid-template-columns: 1fr 1fr 130px 70px 56px;
   gap: 8px;
   align-items: center;
   background: #1E1E2E;
   padding: 10px;
   border-radius: 12px;
+}
+
+.edit-row .field-drive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  justify-self: center;
 }
 
 .edit-row input {
@@ -137,10 +146,11 @@
     grid-template-areas:
       "avatar avatar"
       "name birthday"
-      "delete delete";
+      "drive delete";
   }
   .edit-row input:nth-child(1) { grid-area: avatar; }
   .edit-row input:nth-child(2) { grid-area: name; }
   .edit-row input:nth-child(3) { grid-area: birthday; }
+  .edit-row .field-drive { grid-area: drive; justify-self: start; }
   .edit-row .delete-btn { grid-area: delete; justify-self: end; }
 }

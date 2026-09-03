@@ -80,6 +80,14 @@ function buildMemberRow(member, index) {
     state.members[index].birthday = e.target.value;
   });
 
+  const driveInput = document.createElement('input');
+  driveInput.type = 'checkbox';
+  driveInput.className = 'field-drive';
+  driveInput.checked = Boolean(member.canDrive);
+  driveInput.addEventListener('change', (e) => {
+    state.members[index].canDrive = e.target.checked;
+  });
+
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
   deleteBtn.className = 'delete-btn';
@@ -92,6 +100,7 @@ function buildMemberRow(member, index) {
   row.appendChild(avatarInput);
   row.appendChild(nameInput);
   row.appendChild(birthdayInput);
+  row.appendChild(driveInput);
   row.appendChild(deleteBtn);
 
   return row;
@@ -103,6 +112,7 @@ addBtn.addEventListener('click', () => {
     name: '新成員',
     birthday: '2000-01-01',
     avatarUrl: '',
+    canDrive: false,
   });
   renderEditList();
 });
