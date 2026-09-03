@@ -95,6 +95,7 @@ function buildMemberRow(member, index) {
   roleSelect.appendChild(passengerOption);
   roleSelect.appendChild(notParticipatingOption);
   roleSelect.value = member.role || 'passenger';
+  state.members[index].role = roleSelect.value;
   roleSelect.addEventListener('change', (e) => {
     state.members[index].role = e.target.value;
   });

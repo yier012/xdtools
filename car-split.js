@@ -21,7 +21,9 @@ fetch('/api/members')
   .then((data) => {
     allMembers = data.members || [];
     drivers = allMembers.filter((m) => m.role === 'driver');
-    passengers = allMembers.filter((m) => m.role === 'passenger');
+    passengers = allMembers.filter(
+      (m) => m.role !== 'driver' && m.role !== 'not_participating'
+    );
 
     loadingText.style.display = 'none';
     controlsView.hidden = false;
