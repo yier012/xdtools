@@ -130,7 +130,7 @@ body {
 
 .card--soon {
   background: transparent;
-  border: 1.5px dashed #3A3A4A;
+  border: 1.5px dashed #6E6C7C;
   color: var(--muted);
   cursor: not-allowed;
 }
