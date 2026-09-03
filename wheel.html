@@ -3,16 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>轉盤 / 抽獎 - XD團工具箱</title>
+<title>抽獎器 - XD團工具箱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="wheel.css">
 </head>
 <body>
+
   <div class="page">
     <header class="topbar">
       <div>
-        <h1 class="logo">轉盤 / 抽獎</h1>
-        <p class="greeting">這頁還在蓋,晚點回來看看</p>
+        <h1 class="logo">抽獎器</h1>
+        <p class="greeting">按下去,看是誰倒楣</p>
       </div>
       <a href="index.html" class="settings-btn" aria-label="回首頁">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -20,6 +24,33 @@
         </svg>
       </a>
     </header>
+
+    <main>
+      <p id="loading-text" class="loading-text">名單載入中...</p>
+
+      <div id="draw-view" class="draw-view" hidden>
+        <div class="reel" id="reel">
+          <span id="reel-text">按下面開始抽</span>
+        </div>
+
+        <button type="button" id="draw-btn" class="draw-btn">抽！</button>
+
+        <label class="no-repeat-toggle">
+          <input type="checkbox" id="no-repeat-checkbox" checked>
+          抽過的人不再抽到(抽完會自動重新開放)
+        </label>
+
+        <div class="history-section">
+          <div class="history-header">
+            <h2 class="section-title">抽過的人</h2>
+            <button type="button" id="reset-btn" class="reset-btn">重設</button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </div>
+      </div>
+    </main>
   </div>
+
+  <script src="wheel.js"></script>
 </body>
 </html>
