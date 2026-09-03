@@ -8,10 +8,8 @@ const addRuleBtn = document.getElementById('add-rule-btn');
 const splitBtn = document.getElementById('split-btn');
 const setupError = document.getElementById('setup-error');
 const carsView = document.getElementById('cars-view');
-const driverANameEl = document.getElementById('driver-a-name');
-const driverBNameEl = document.getElementById('driver-b-name');
-const carAPassengersEl = document.getElementById('car-a-passengers');
-const carBPassengersEl = document.getElementById('car-b-passengers');
+const carAMembersEl = document.getElementById('car-a-members');
+const carBMembersEl = document.getElementById('car-b-members');
 
 let allMembers = [];
 let drivers = [];
@@ -159,10 +157,21 @@ function attemptSplit(rules) {
   };
 }
 
-function renderPassengerList(container, members) {
+function renderCarMembers(container, driver, passengerMembers) {
   container.innerHTML = '';
-  members.forEach((member) => {
+
+  const driverRow = document.createElement('div');
+  driverRow.className = 'car-member-row';
+  driverRow.textContent = driver.name;
+  const badge = document.createElement('span');
+  badge.className = 'driver-badge';
+  badge.textContent = '駕駛';
+  driverRow.appendChild(badge);
+  container.appendChild(driverRow);
+
+  passengerMembers.forEach((member) => {
     const row = document.createElement('div');
+    row.className = 'car-member-row';
     row.textContent = member.name;
     container.appendChild(row);
   });
@@ -188,10 +197,8 @@ function runSplit() {
     return;
   }
 
-  driverANameEl.textContent = result.driverA.name;
-  driverBNameEl.textContent = result.driverB.name;
-  renderPassengerList(carAPassengersEl, result.carAPassengers);
-  renderPassengerList(carBPassengersEl, result.carBPassengers);
+  renderCarMembers(carAMembersEl, result.driverA, result.carAPassengers);
+  renderCarMembers(carBMembersEl, result.driverB, result.carBPassengers);
   carsView.hidden = false;
   splitBtn.textContent = '再抽一次';
 }
