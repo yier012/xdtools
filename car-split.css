@@ -1,18 +1,97 @@
-.loading-text {
+.loading-text,
+.hint-text {
   color: var(--muted);
   font-size: 13px;
+}
+
+.hint-text {
+  margin-top: -6px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 4px 0 8px;
+}
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.rule-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 90px 32px;
+  gap: 8px;
+  align-items: center;
+  background: #1E1E2E;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.rule-row select {
+  padding: 8px 8px;
+  border-radius: 8px;
+  border: 1px solid #3A3A4A;
+  background: #14141F;
+  color: var(--ink);
+  font-size: 13px;
+  min-width: 0;
+  width: 100%;
+}
+
+.rule-delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--coral);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.add-rule-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px dashed #3A3A4A;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.split-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--yellow);
+  color: var(--yellow-text);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.setup-error {
+  color: var(--coral);
+  font-size: 13px;
+  margin-top: 12px;
 }
 
 .cars-view {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-top: 24px;
 }
 
 .car-box {
   border-radius: 18px;
   padding: 20px;
-  min-height: 200px;
 }
 
 .car-box--yellow {
@@ -25,7 +104,7 @@
   color: var(--sky-text);
 }
 
-.car-driver-label {
+.car-title {
   font-size: 12px;
   opacity: 0.75;
 }
@@ -46,43 +125,14 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 24px;
   font-size: 14px;
-}
-
-.car-passenger-list:empty::before {
-  content: "按下面「分車！」開始";
-  opacity: 0.6;
-  font-size: 13px;
-}
-
-.split-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: #F5F2EA;
-  color: #14141F;
-  font-weight: 500;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.setup-error {
-  color: var(--coral);
-  font-size: 13px;
-  margin-top: 12px;
 }
 
 @media (min-width: 560px) {
   .cars-view {
     flex-direction: row;
-    flex-wrap: wrap;
   }
   .car-box {
-    flex: 1 1 260px;
-  }
-  .split-btn {
-    flex-basis: 100%;
+    flex: 1;
   }
 }

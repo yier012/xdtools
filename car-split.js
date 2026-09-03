@@ -1,58 +1,115 @@
-// ============================================
-// 這裡是唯一需要手動修改的地方,改成你們真實的名字就好(要跟後台裡的暱稱完全一樣)
-// ============================================
-
-// 1號車、2號車的駕駛,固定不變
-const DRIVER_A_NAME = '阿翔';
-const DRIVER_B_NAME = '阿凱';
-
-// 這兩人不能同一台車(例如已分手的情侶)
-const NOT_TOGETHER = ['小玉', '珊珊'];
-
-// 這兩人一定要同一台車(不管分到哪一台,反正要一起)
-const MUST_TOGETHER = ['柏廷', '小魚'];
-
-// ============================================
+const MAX_ATTEMPTS = 500;
 
 const loadingText = document.getElementById('loading-text');
-const carsView = document.getElementById('cars-view');
+const driverWarning = document.getElementById('driver-warning');
+const controlsView = document.getElementById('controls-view');
+const rulesList = document.getElementById('rules-list');
+const addRuleBtn = document.getElementById('add-rule-btn');
+const splitBtn = document.getElementById('split-btn');
 const setupError = document.getElementById('setup-error');
+const carsView = document.getElementById('cars-view');
 const driverANameEl = document.getElementById('driver-a-name');
 const driverBNameEl = document.getElementById('driver-b-name');
 const carAPassengersEl = document.getElementById('car-a-passengers');
 const carBPassengersEl = document.getElementById('car-b-passengers');
-const splitBtn = document.getElementById('split-btn');
 
-let driverA = null;
-let driverB = null;
+let allMembers = [];
+let drivers = [];
 let passengers = [];
+let ruleIdCounter = 0;
 
 fetch('/api/members')
   .then((res) => res.json())
   .then((data) => {
-    const members = data.members || [];
-
-    driverA = members.find((m) => m.name === DRIVER_A_NAME);
-    driverB = members.find((m) => m.name === DRIVER_B_NAME);
-
-    if (!driverA || !driverB) {
-      loadingText.textContent =
-        '找不到指定的駕駛,檢查一下 car-split.js 裡 DRIVER_A_NAME / DRIVER_B_NAME 的名字有沒有跟後台的暱稱完全一樣';
-      return;
-    }
-
-    passengers = members.filter(
-      (m) => m.id !== driverA.id && m.id !== driverB.id
-    );
+    allMembers = data.members || [];
+    drivers = allMembers.filter((m) => m.role === 'driver');
+    passengers = allMembers.filter((m) => m.role === 'passenger');
 
     loadingText.style.display = 'none';
-    carsView.hidden = false;
-    driverANameEl.textContent = driverA.name;
-    driverBNameEl.textContent = driverB.name;
+    controlsView.hidden = false;
+
+    if (drivers.length !== 2) {
+      driverWarning.hidden = false;
+      driverWarning.textContent =
+        `目前後台設定了 ${drivers.length} 個駕駛,要剛好 2 個才能分車。去後台把身分改一下吧。`;
+      splitBtn.disabled = true;
+    }
+
+    addRuleRow();
   })
   .catch(() => {
     loadingText.textContent = '讀取失敗,重新整理看看';
   });
+
+function buildMemberOptions(selectEl, selectedId) {
+  selectEl.innerHTML = '<option value="">-- 選人 --</option>';
+  allMembers.forEach((member) => {
+    const option = document.createElement('option');
+    option.value = member.id;
+    option.textContent = member.name;
+    selectEl.appendChild(option);
+  });
+  if (selectedId) {
+    selectEl.value = selectedId;
+  }
+}
+
+function addRuleRow() {
+  ruleIdCounter += 1;
+  const row = document.createElement('div');
+  row.className = 'rule-row';
+  row.dataset.ruleId = ruleIdCounter;
+
+  const personASelect = document.createElement('select');
+  const personBSelect = document.createElement('select');
+  buildMemberOptions(personASelect);
+  buildMemberOptions(personBSelect);
+
+  const relationSelect = document.createElement('select');
+  const togetherOption = document.createElement('option');
+  togetherOption.value = 'together';
+  togetherOption.textContent = '一起坐';
+  const apartOption = document.createElement('option');
+  apartOption.value = 'apart';
+  apartOption.textContent = '分開坐';
+  relationSelect.appendChild(togetherOption);
+  relationSelect.appendChild(apartOption);
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.type = 'button';
+  deleteBtn.className = 'rule-delete-btn';
+  deleteBtn.textContent = '刪除';
+  deleteBtn.addEventListener('click', () => row.remove());
+
+  row.appendChild(personASelect);
+  row.appendChild(personBSelect);
+  row.appendChild(relationSelect);
+  row.appendChild(deleteBtn);
+
+  rulesList.appendChild(row);
+}
+
+function readRules() {
+  const rows = Array.from(rulesList.children);
+  const rules = [];
+
+  for (const row of rows) {
+    const selects = row.querySelectorAll('select');
+    const personAId = selects[0].value;
+    const personBId = selects[1].value;
+    const relation = selects[2].value;
+
+    if (!personAId || !personBId) {
+      return { error: '每一條規則的兩個人都要選喔' };
+    }
+    if (personAId === personBId) {
+      return { error: '同一條規則裡不能選同一個人' };
+    }
+    rules.push({ personAId, personBId, relation });
+  }
+
+  return { rules };
+}
 
 function shuffle(array) {
   const result = array.slice();
@@ -63,50 +120,43 @@ function shuffle(array) {
   return result;
 }
 
-function splitPassengers() {
-  const carA = [];
-  const carB = [];
-  let pool = passengers.slice();
+function carOf(id, carAIds, carBIds) {
+  if (carAIds.includes(id)) return 'A';
+  if (carBIds.includes(id)) return 'B';
+  return null;
+}
 
-  // 一定要同車的那兩人:一起丟進隨機選到的一台車
-  const [mustName1, mustName2] = MUST_TOGETHER;
-  const mustMember1 = pool.find((m) => m.name === mustName1);
-  const mustMember2 = pool.find((m) => m.name === mustName2);
-  if (mustMember1 && mustMember2) {
-    pool = pool.filter(
-      (m) => m.id !== mustMember1.id && m.id !== mustMember2.id
-    );
-    const targetCar = Math.random() < 0.5 ? carA : carB;
-    targetCar.push(mustMember1, mustMember2);
-  }
+function attemptSplit(rules) {
+  const shuffledDrivers = shuffle(drivers);
+  const [driverA, driverB] = shuffledDrivers;
 
-  // 不能同車的那兩人:硬拆到不同台車
-  const [notName1, notName2] = NOT_TOGETHER;
-  const notMember1 = pool.find((m) => m.name === notName1);
-  const notMember2 = pool.find((m) => m.name === notName2);
-  if (notMember1 && notMember2) {
-    pool = pool.filter(
-      (m) => m.id !== notMember1.id && m.id !== notMember2.id
-    );
-    if (Math.random() < 0.5) {
-      carA.push(notMember1);
-      carB.push(notMember2);
-    } else {
-      carA.push(notMember2);
-      carB.push(notMember1);
-    }
-  }
+  const shuffledPassengers = shuffle(passengers);
+  const seatsA = Math.ceil(shuffledPassengers.length / 2);
+  const carAPassengers = shuffledPassengers.slice(0, seatsA);
+  const carBPassengers = shuffledPassengers.slice(seatsA);
 
-  // 剩下的人隨機分配,盡量平均
-  shuffle(pool).forEach((member) => {
-    if (carA.length <= carB.length) {
-      carA.push(member);
-    } else {
-      carB.push(member);
-    }
+  const carAIds = [driverA.id, ...carAPassengers.map((m) => m.id)];
+  const carBIds = [driverB.id, ...carBPassengers.map((m) => m.id)];
+
+  const allRulesPass = rules.every((rule) => {
+    const carOfA = carOf(rule.personAId, carAIds, carBIds);
+    const carOfB = carOf(rule.personBId, carAIds, carBIds);
+
+    // 如果規則裡的人剛好不參與抽車,這條規則就不管它
+    if (!carOfA || !carOfB) return true;
+
+    if (rule.relation === 'together') return carOfA === carOfB;
+    return carOfA !== carOfB;
   });
 
-  return { carA, carB };
+  if (!allRulesPass) return null;
+
+  return {
+    driverA,
+    driverB,
+    carAPassengers,
+    carBPassengers,
+  };
 }
 
 function renderPassengerList(container, members) {
@@ -120,10 +170,31 @@ function renderPassengerList(container, members) {
 
 function runSplit() {
   setupError.textContent = '';
-  const { carA, carB } = splitPassengers();
-  renderPassengerList(carAPassengersEl, carA);
-  renderPassengerList(carBPassengersEl, carB);
+
+  const { rules, error } = readRules();
+  if (error) {
+    setupError.textContent = error;
+    return;
+  }
+
+  let result = null;
+  for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
+    result = attemptSplit(rules);
+    if (result) break;
+  }
+
+  if (!result) {
+    setupError.textContent = '規則可能互相矛盾,找不到符合的分法,調整一下規則再試試';
+    return;
+  }
+
+  driverANameEl.textContent = result.driverA.name;
+  driverBNameEl.textContent = result.driverB.name;
+  renderPassengerList(carAPassengersEl, result.carAPassengers);
+  renderPassengerList(carBPassengersEl, result.carBPassengers);
+  carsView.hidden = false;
   splitBtn.textContent = '再抽一次';
 }
 
+addRuleBtn.addEventListener('click', addRuleRow);
 splitBtn.addEventListener('click', runSplit);

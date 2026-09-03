@@ -49,7 +49,7 @@
 
 .edit-list-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 70px 56px;
+  grid-template-columns: 1fr 1fr 130px 116px 56px;
   gap: 8px;
   padding: 0 10px;
   margin-bottom: 8px;
@@ -65,7 +65,7 @@
 
 .edit-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 70px 56px;
+  grid-template-columns: 1fr 1fr 130px 116px 56px;
   gap: 8px;
   align-items: center;
   background: #1E1E2E;
@@ -73,13 +73,13 @@
   border-radius: 12px;
 }
 
-.edit-row .field-drive {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  justify-self: center;
+.edit-row .field-role {
+  padding: 8px 6px;
+  border-radius: 8px;
+  border: 1px solid #3A3A4A;
+  background: #14141F;
+  color: var(--ink);
+  font-size: 12px;
 }
 
 .edit-row input {
@@ -146,11 +146,11 @@
     grid-template-areas:
       "avatar avatar"
       "name birthday"
-      "drive delete";
+      "role delete";
   }
   .edit-row input:nth-child(1) { grid-area: avatar; }
   .edit-row input:nth-child(2) { grid-area: name; }
   .edit-row input:nth-child(3) { grid-area: birthday; }
-  .edit-row .field-drive { grid-area: drive; justify-self: start; }
+  .edit-row .field-role { grid-area: role; justify-self: start; }
   .edit-row .delete-btn { grid-area: delete; justify-self: end; }
 }

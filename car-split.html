@@ -16,7 +16,7 @@
     <header class="topbar">
       <div>
         <h1 class="logo">分車器</h1>
-        <p class="greeting">駕駛固定,其他人隨機分配</p>
+        <p class="greeting">駕駛乘客看後台設定,規則自己加</p>
       </div>
       <a href="index.html" class="settings-btn" aria-label="回首頁">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -27,26 +27,34 @@
 
     <main>
       <p id="loading-text" class="loading-text">名單載入中...</p>
+      <p id="driver-warning" class="setup-error" hidden></p>
+
+      <section id="controls-view" class="controls-view" hidden>
+        <h2 class="section-title">自訂規則</h2>
+        <p class="hint-text">規則會套用在乘客(跟駕駛)身上,抽到不符合規則就自動重抽</p>
+
+        <div id="rules-list" class="rules-list"></div>
+        <button type="button" id="add-rule-btn" class="add-rule-btn">+ 新增規則</button>
+
+        <button type="button" id="split-btn" class="split-btn">分車！</button>
+        <p id="setup-error" class="setup-error"></p>
+      </section>
 
       <div id="cars-view" class="cars-view" hidden>
         <div class="car-box car-box--yellow">
-          <div class="car-driver-label">1號車駕駛</div>
-          <div class="car-driver-name" id="driver-a-name">-</div>
+          <div class="car-title">1號車</div>
+          <div class="car-driver-name" id="driver-a-name"></div>
           <div class="car-divider"></div>
           <div id="car-a-passengers" class="car-passenger-list"></div>
         </div>
 
         <div class="car-box car-box--sky">
-          <div class="car-driver-label">2號車駕駛</div>
-          <div class="car-driver-name" id="driver-b-name">-</div>
+          <div class="car-title">2號車</div>
+          <div class="car-driver-name" id="driver-b-name"></div>
           <div class="car-divider"></div>
           <div id="car-b-passengers" class="car-passenger-list"></div>
         </div>
-
-        <button type="button" id="split-btn" class="split-btn">分車！</button>
       </div>
-
-      <p id="setup-error" class="setup-error"></p>
     </main>
   </div>
 

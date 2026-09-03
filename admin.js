@@ -80,12 +80,23 @@ function buildMemberRow(member, index) {
     state.members[index].birthday = e.target.value;
   });
 
-  const driveInput = document.createElement('input');
-  driveInput.type = 'checkbox';
-  driveInput.className = 'field-drive';
-  driveInput.checked = Boolean(member.canDrive);
-  driveInput.addEventListener('change', (e) => {
-    state.members[index].canDrive = e.target.checked;
+  const roleSelect = document.createElement('select');
+  roleSelect.className = 'field-role';
+  const driverOption = document.createElement('option');
+  driverOption.value = 'driver';
+  driverOption.textContent = '駕駛';
+  const passengerOption = document.createElement('option');
+  passengerOption.value = 'passenger';
+  passengerOption.textContent = '乘客';
+  const notParticipatingOption = document.createElement('option');
+  notParticipatingOption.value = 'not_participating';
+  notParticipatingOption.textContent = '不參與抽車';
+  roleSelect.appendChild(driverOption);
+  roleSelect.appendChild(passengerOption);
+  roleSelect.appendChild(notParticipatingOption);
+  roleSelect.value = member.role || 'passenger';
+  roleSelect.addEventListener('change', (e) => {
+    state.members[index].role = e.target.value;
   });
 
   const deleteBtn = document.createElement('button');
@@ -100,7 +111,7 @@ function buildMemberRow(member, index) {
   row.appendChild(avatarInput);
   row.appendChild(nameInput);
   row.appendChild(birthdayInput);
-  row.appendChild(driveInput);
+  row.appendChild(roleSelect);
   row.appendChild(deleteBtn);
 
   return row;
@@ -112,7 +123,7 @@ addBtn.addEventListener('click', () => {
     name: '新成員',
     birthday: '2000-01-01',
     avatarUrl: '',
-    canDrive: false,
+    role: 'passenger',
   });
   renderEditList();
 });
