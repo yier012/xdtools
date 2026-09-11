@@ -1,91 +1,107 @@
+/* ========================
+   基礎與登入介面
+======================== */
 .login-view {
-  max-width: 320px;
+  max-width: 340px;
   margin: 60px auto 0;
+  padding: 0 16px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  background: #1E1E2E;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #2D2D3F;
 }
 
 .login-form label {
   font-size: 13px;
   color: var(--muted);
+  font-weight: 500;
 }
 
 .login-form input {
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid #3A3A4A;
-  background: #1E1E2E;
+  background: #14141F;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.login-form input:focus {
+  border-color: var(--yellow);
+  outline: none;
 }
 
 .login-form button {
-  padding: 10px 12px;
+  padding: 12px;
   border-radius: 10px;
   border: none;
   background: var(--yellow);
   color: var(--yellow-text);
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
+  margin-top: 6px;
 }
 
 .login-error {
   color: var(--coral);
   font-size: 13px;
   min-height: 18px;
-  margin: 4px 0 0;
+  margin: 2px 0 0;
 }
 
 .section-title {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 24px 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 14px;
 }
 
+/* ========================
+   成員列表 (電腦版)
+======================== */
 .edit-list-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 116px 56px;
-  gap: 8px;
-  padding: 0 10px;
+  grid-template-columns: 140px 1.2fr 140px 120px 48px;
+  gap: 12px;
+  padding: 0 14px;
   margin-bottom: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
 }
 
 .edit-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .edit-row {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr 130px 116px 56px;
-  gap: 8px;
+  grid-template-columns: 140px 1.2fr 140px 120px 48px;
+  gap: 12px;
   align-items: center;
   background: #1E1E2E;
-  padding: 10px;
-  border-radius: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #2A2A3C;
   min-width: 0;
+  transition: border-color 0.2s ease;
+}
+
+.edit-row:hover {
+  border-color: #3A3A4E;
 }
 
 .edit-row > * {
   min-width: 0;
-}
-
-.edit-row .field-role {
-  padding: 8px 6px;
-  border-radius: 8px;
-  border: 1px solid #3A3A4A;
-  background: #14141F;
-  color: var(--ink);
-  font-size: 12px;
-  width: 100%;
 }
 
 .avatar-cell {
@@ -96,19 +112,20 @@
 }
 
 .avatar-preview {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #33324A;
+  background-color: #2D2D3F;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--ink);
   flex-shrink: 0;
+  border: 1.5px solid #3A3A4A;
 }
 
 .avatar-upload-btn {
@@ -116,7 +133,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid #3A3A4A;
   background: #14141F;
@@ -124,7 +141,12 @@
   font-size: 12px;
   cursor: pointer;
   white-space: nowrap;
-  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+  border-color: #55556B;
+  color: var(--ink);
 }
 
 .avatar-file-input {
@@ -144,15 +166,213 @@
   display: none;
 }
 
+.edit-row input,
+.edit-row select {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #3A3A4A;
+  background: #14141F;
+  color: var(--ink);
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-row input:focus,
+.edit-row select:focus {
+  border-color: var(--yellow);
+  outline: none;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--coral);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+}
+
+/* ========================
+   按鈕與操作列
+======================== */
+.add-btn {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px dashed #3A3A4A;
+  background: rgba(30, 30, 46, 0.4);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+  border-color: #5A5A72;
+  color: var(--ink);
+  background: #1E1E2E;
+}
+
+.save-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+}
+
+.save-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  background: var(--sky);
+  color: var(--sky-text);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.save-btn:hover {
+  opacity: 0.9;
+}
+
+.save-status {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ========================
+   手機專用卡片化 UI (RWD)
+======================== */
+@media (max-width: 600px) {
+  .edit-list-header {
+    display: none;
+  }
+
+  .edit-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+    border-radius: 16px;
+    background: #1C1C2B;
+    border: 1px solid #2E2E40;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  /* 刪除按鈕移到右上角 */
+  .delete-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 12px;
+    padding: 4px 8px;
+    background: rgba(235, 87, 87, 0.1);
+    border-radius: 6px;
+  }
+
+  /* 頭貼區塊放大，手感更好 */
+  .avatar-cell {
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #28283A;
+  }
+
+  .avatar-preview {
+    width: 46px;
+    height: 46px;
+    font-size: 16px;
+  }
+
+  /* 手機版顯示欄位標籤 */
+  .field-label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  /* 暱稱單獨一整行 */
+  .field-group--name {
+    width: 100%;
+  }
+
+  /* 生日與身分並排雙欄展示 */
+  .field-group--birthday,
+  .field-group--role {
+    flex: 1;
+  }
+
+  /* 使用 flex 包裝生日與身分（透過 row 自適應並排） */
+  .edit-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "avatar avatar"
+      "name name"
+      "birthday role";
+    gap: 12px;
+  }
+
+  .edit-row .avatar-cell { grid-area: avatar; }
+  .edit-row .field-group--name { grid-area: name; }
+  .edit-row .field-group--birthday { grid-area: birthday; }
+  .edit-row .field-group--role { grid-area: role; }
+
+  .edit-row input,
+  .edit-row select {
+    height: 42px; /* 適合手機觸控高度 */
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 0 12px;
+  }
+
+  /* 底部儲存列固定在螢幕下方，不用滑到最底 */
+  .save-bar {
+    position: sticky;
+    bottom: 16px;
+    background: rgba(20, 20, 31, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid #2E2E40;
+    margin-top: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+  }
+
+  .save-btn {
+    flex: 1;
+    height: 44px;
+    font-size: 15px;
+  }
+}
+
+/* ========================
+   裁切彈窗
+======================== */
 .crop-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: 20px;
+  padding: 16px;
 }
 
 .crop-modal[hidden] {
@@ -164,14 +384,14 @@
   border-radius: 16px;
   padding: 16px;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
 }
 
 .crop-image-wrapper {
   width: 100%;
-  height: 320px;
+  height: 280px;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .crop-image-wrapper img {
@@ -205,103 +425,4 @@
 .crop-confirm-btn {
   background: var(--yellow);
   color: var(--yellow-text);
-}
-
-.edit-row input {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #3A3A4A;
-  background: #14141F;
-  color: var(--ink);
-  font-size: 13px;
-  min-width: 0;
-  width: 100%;
-}
-
-.delete-btn {
-  border: none;
-  background: transparent;
-  color: var(--coral);
-  font-size: 13px;
-  cursor: pointer;
-  padding: 6px;
-}
-
-.add-btn {
-  margin-top: 12px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1.5px dashed #3A3A4A;
-  background: transparent;
-  color: var(--muted);
-  font-size: 14px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.save-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.save-btn {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: none;
-  background: var(--sky);
-  color: var(--sky-text);
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.save-status {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-@media (max-width: 560px) {
-  .edit-list-header {
-    display: none;
-  }
-
-  .edit-row {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "avatar avatar"
-      "name birthday"
-      "role delete";
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .edit-row .avatar-cell { grid-area: avatar; }
-  .edit-row .field-group--name { grid-area: name; }
-  .edit-row .field-group--birthday { grid-area: birthday; }
-  .edit-row .field-group--role { grid-area: role; }
-  .edit-row .delete-btn {
-    grid-area: delete;
-    justify-self: end;
-    align-self: end;
-    width: auto;
-    padding: 8px 12px;
-  }
-
-  .field-label {
-    display: block;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-
-  .edit-row input[type="date"] {
-    font-size: 12px;
-    padding: 8px 6px;
-  }
-
-  .crop-image-wrapper {
-    height: 240px;
-  }
 }
