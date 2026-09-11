@@ -80,12 +80,14 @@
   background: #14141F;
   color: var(--ink);
   font-size: 12px;
+  width: 100%;
 }
 
 .avatar-cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  min-width: 0;
 }
 
 .avatar-preview {
@@ -104,11 +106,37 @@
   flex-shrink: 0;
 }
 
-.avatar-file-input {
-  min-width: 0;
-  flex: 1;
-  font-size: 11px;
+.avatar-upload-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #3A3A4A;
+  background: #14141F;
   color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.avatar-file-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.field-group {
+  min-width: 0;
+}
+
+.field-label {
+  display: none;
 }
 
 .crop-modal {
@@ -233,16 +261,41 @@
   .edit-list-header {
     display: none;
   }
+
   .edit-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
-      "avatar avatar"
-      "name birthday"
-      "role delete";
+      "avatar"
+      "name"
+      "birthday"
+      "role"
+      "delete";
+    gap: 12px;
+    padding: 14px;
   }
+
   .edit-row .avatar-cell { grid-area: avatar; }
-  .edit-row .field-name { grid-area: name; }
-  .edit-row .field-birthday { grid-area: birthday; }
-  .edit-row .field-role { grid-area: role; justify-self: start; }
-  .edit-row .delete-btn { grid-area: delete; justify-self: end; }
+  .edit-row .field-group--name { grid-area: name; }
+  .edit-row .field-group--birthday { grid-area: birthday; }
+  .edit-row .field-group--role { grid-area: role; }
+  .edit-row .delete-btn { grid-area: delete; }
+
+  .field-label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .edit-row .delete-btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #3A3A4A;
+  }
+
+  .crop-image-wrapper {
+    height: 240px;
+  }
 }

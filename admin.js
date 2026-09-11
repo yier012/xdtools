@@ -64,6 +64,10 @@ function buildMemberRow(member, index) {
   avatarPreview.className = 'avatar-preview';
   updateAvatarPreview(avatarPreview, member);
 
+  const avatarUploadLabel = document.createElement('label');
+  avatarUploadLabel.className = 'avatar-upload-btn';
+  avatarUploadLabel.textContent = '更換照片';
+
   const avatarFileInput = document.createElement('input');
   avatarFileInput.type = 'file';
   avatarFileInput.accept = 'image/*';
@@ -78,8 +82,15 @@ function buildMemberRow(member, index) {
     avatarFileInput.value = '';
   });
 
+  avatarUploadLabel.appendChild(avatarFileInput);
   avatarCell.appendChild(avatarPreview);
-  avatarCell.appendChild(avatarFileInput);
+  avatarCell.appendChild(avatarUploadLabel);
+
+  const nameGroup = document.createElement('div');
+  nameGroup.className = 'field-group field-group--name';
+  const nameLabel = document.createElement('label');
+  nameLabel.className = 'field-label';
+  nameLabel.textContent = '暱稱';
 
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
@@ -89,6 +100,14 @@ function buildMemberRow(member, index) {
   nameInput.addEventListener('input', (e) => {
     state.members[index].name = e.target.value;
   });
+  nameGroup.appendChild(nameLabel);
+  nameGroup.appendChild(nameInput);
+
+  const birthdayGroup = document.createElement('div');
+  birthdayGroup.className = 'field-group field-group--birthday';
+  const birthdayLabel = document.createElement('label');
+  birthdayLabel.className = 'field-label';
+  birthdayLabel.textContent = '生日';
 
   const birthdayInput = document.createElement('input');
   birthdayInput.type = 'date';
@@ -97,6 +116,14 @@ function buildMemberRow(member, index) {
   birthdayInput.addEventListener('input', (e) => {
     state.members[index].birthday = e.target.value;
   });
+  birthdayGroup.appendChild(birthdayLabel);
+  birthdayGroup.appendChild(birthdayInput);
+
+  const roleGroup = document.createElement('div');
+  roleGroup.className = 'field-group field-group--role';
+  const roleLabel = document.createElement('label');
+  roleLabel.className = 'field-label';
+  roleLabel.textContent = '身分';
 
   const roleSelect = document.createElement('select');
   roleSelect.className = 'field-role';
@@ -117,20 +144,22 @@ function buildMemberRow(member, index) {
   roleSelect.addEventListener('change', (e) => {
     state.members[index].role = e.target.value;
   });
+  roleGroup.appendChild(roleLabel);
+  roleGroup.appendChild(roleSelect);
 
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
   deleteBtn.className = 'delete-btn';
-  deleteBtn.textContent = '刪除';
+  deleteBtn.textContent = '刪除這個人';
   deleteBtn.addEventListener('click', () => {
     state.members.splice(index, 1);
     renderEditList();
   });
 
   row.appendChild(avatarCell);
-  row.appendChild(nameInput);
-  row.appendChild(birthdayInput);
-  row.appendChild(roleSelect);
+  row.appendChild(nameGroup);
+  row.appendChild(birthdayGroup);
+  row.appendChild(roleGroup);
   row.appendChild(deleteBtn);
 
   return row;
