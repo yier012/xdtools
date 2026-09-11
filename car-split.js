@@ -1,4 +1,5 @@
 const MAX_ATTEMPTS = 500;
+const MAX_PARTICIPANTS = 10;
 
 const loadingText = document.getElementById('loading-text');
 const driverWarning = document.getElementById('driver-warning');
@@ -12,6 +13,7 @@ const carAMembersEl = document.getElementById('car-a-members');
 const carBMembersEl = document.getElementById('car-b-members');
 
 let allMembers = [];
+let activeMembers = []; // 排除掉不參與抽車的人
 let drivers = [];
 let passengers = [];
 let ruleIdCounter = 0;
@@ -20,30 +22,40 @@ fetch('/api/members')
   .then((res) => res.json())
   .then((data) => {
     allMembers = data.members || [];
-    drivers = allMembers.filter((m) => m.role === 'driver');
-    passengers = allMembers.filter(
-      (m) => m.role !== 'driver' && m.role !== 'not_participating'
-    );
+    // 排除「不參與抽車」的成員
+    activeMembers = allMembers.filter((m) => m.role !== 'not_participating');
+    drivers = activeMembers.filter((m) => m.role === 'driver');
+    passengers = activeMembers.filter((m) => m.role !== 'driver');
 
     loadingText.style.display = 'none';
     controlsView.hidden = false;
 
-    if (drivers.length !== 2) {
+    // 檢查 1：駕駛數量至少需要 2 人
+    if (drivers.length < 2) {
       driverWarning.hidden = false;
-      driverWarning.textContent =
-        `目前後台設定了 ${drivers.length} 個駕駛,要剛好 2 個才能分車。去後台把身分改一下吧。`;
+      driverWarning.textContent = `目前後台只設定了 ${drivers.length} 個駕駛，至少需要 2 個駕駛才能分車。去後台改一下身分吧！`;
       splitBtn.disabled = true;
+      return;
+    }
+
+    // 檢查 2：總參與人數上限（兩台 5 人座上限 10 人）
+    if (activeMembers.length > MAX_PARTICIPANTS) {
+      driverWarning.hidden = false;
+      driverWarning.textContent = `參與抽車人數為 ${activeMembers.length} 人，超過兩台車的人數上限（最多 ${MAX_PARTICIPANTS} 人）。`;
+      splitBtn.disabled = true;
+      return;
     }
 
     addRuleRow();
   })
   .catch(() => {
-    loadingText.textContent = '讀取失敗,重新整理看看';
+    loadingText.textContent = '讀取失敗，請重新整理試試';
   });
 
+// 下拉選單只提供會參與抽車的名單
 function buildMemberOptions(selectEl, selectedId) {
   selectEl.innerHTML = '<option value="">-- 選人 --</option>';
-  allMembers.forEach((member) => {
+  activeMembers.forEach((member) => {
     const option = document.createElement('option');
     option.value = member.id;
     option.textContent = member.name;
@@ -127,10 +139,17 @@ function carOf(id, carAIds, carBIds) {
 }
 
 function attemptSplit(rules) {
+  // 1. 打亂所有駕駛，前 2 位擔任開車駕駛
   const shuffledDrivers = shuffle(drivers);
-  const [driverA, driverB] = shuffledDrivers;
+  const driverA = shuffledDrivers[0];
+  const driverB = shuffledDrivers[1];
 
-  const shuffledPassengers = shuffle(passengers);
+  // 2. 沒被選中的駕駛，自動併入乘客池
+  const extraDriversAsPassengers = shuffledDrivers.slice(2);
+  const allCurrentPassengers = [...passengers, ...extraDriversAsPassengers];
+
+  // 3. 打亂乘客並盡量平均分配給兩台車
+  const shuffledPassengers = shuffle(allCurrentPassengers);
   const seatsA = Math.ceil(shuffledPassengers.length / 2);
   const carAPassengers = shuffledPassengers.slice(0, seatsA);
   const carBPassengers = shuffledPassengers.slice(seatsA);
@@ -138,13 +157,12 @@ function attemptSplit(rules) {
   const carAIds = [driverA.id, ...carAPassengers.map((m) => m.id)];
   const carBIds = [driverB.id, ...carBPassengers.map((m) => m.id)];
 
+  // 4. 驗證自訂規則
   const allRulesPass = rules.every((rule) => {
     const carOfA = carOf(rule.personAId, carAIds, carBIds);
     const carOfB = carOf(rule.personBId, carAIds, carBIds);
 
-    // 如果規則裡的人剛好不參與抽車,這條規則就不管它
     if (!carOfA || !carOfB) return true;
-
     if (rule.relation === 'together') return carOfA === carOfB;
     return carOfA !== carOfB;
   });
@@ -195,7 +213,7 @@ function runSplit() {
   }
 
   if (!result) {
-    setupError.textContent = '規則可能互相矛盾,找不到符合的分法,調整一下規則再試試';
+    setupError.textContent = '規則可能互相矛盾找不到組合，請調整規則後再試試。';
     return;
   }
 
