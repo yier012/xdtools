@@ -71,6 +71,11 @@
   background: #1E1E2E;
   padding: 10px;
   border-radius: 12px;
+  min-width: 0;
+}
+
+.edit-row > * {
+  min-width: 0;
 }
 
 .edit-row .field-role {
@@ -263,22 +268,26 @@
   }
 
   .edit-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "avatar"
-      "name"
-      "birthday"
-      "role"
-      "delete";
-    gap: 12px;
-    padding: 14px;
+      "avatar avatar"
+      "name birthday"
+      "role delete";
+    gap: 10px;
+    padding: 12px;
   }
 
   .edit-row .avatar-cell { grid-area: avatar; }
   .edit-row .field-group--name { grid-area: name; }
   .edit-row .field-group--birthday { grid-area: birthday; }
   .edit-row .field-group--role { grid-area: role; }
-  .edit-row .delete-btn { grid-area: delete; }
+  .edit-row .delete-btn {
+    grid-area: delete;
+    justify-self: end;
+    align-self: end;
+    width: auto;
+    padding: 8px 12px;
+  }
 
   .field-label {
     display: block;
@@ -287,12 +296,9 @@
     margin-bottom: 4px;
   }
 
-  .edit-row .delete-btn {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #3A3A4A;
+  .edit-row input[type="date"] {
+    font-size: 12px;
+    padding: 8px 6px;
   }
 
   .crop-image-wrapper {
