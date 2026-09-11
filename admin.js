@@ -150,7 +150,7 @@ function buildMemberRow(member, index) {
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
   deleteBtn.className = 'delete-btn';
-  deleteBtn.textContent = '刪除這個人';
+  deleteBtn.textContent = '刪除';
   deleteBtn.addEventListener('click', () => {
     state.members.splice(index, 1);
     renderEditList();
