@@ -152,9 +152,13 @@ function buildMemberRow(member, index) {
   deleteBtn.className = 'delete-btn';
   deleteBtn.textContent = '刪除';
   deleteBtn.addEventListener('click', () => {
-    state.members.splice(index, 1);
-    renderEditList();
-  });
+      const memberName = member.name || '這名成員';
+      const confirmed = window.confirm(`確定要刪除「${memberName}」？`);
+      if (!confirmed) return;
+
+      state.members.splice(index, 1);
+      renderEditList();
+    });
 
   row.appendChild(avatarCell);
   row.appendChild(nameGroup);
