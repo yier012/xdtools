@@ -401,14 +401,32 @@
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
-  -webkit-appearance: none; /* 移除 iOS 內建特殊外觀計算 */
+  -webkit-appearance: none;
   appearance: none;
-  display: block;
+  
+  /* 關鍵修正：用 Flex 讓內容與圖標垂直置中 */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start;
+  
+  /* 解除固定行高造成的向上偏移 */
+  line-height: normal !important;
+  padding: 0 10px !important;
+  height: 40px !important;
 }
 
-/* 3. 避免日期右側日曆圖標產生額外的溢出空間 */
+/* 修正 WebKit 內部文字區塊的對齊與邊距 */
+.field-birthday::-webkit-date-and-time-value {
+  text-align: left;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+}
+
+/* 日曆小圖標也垂直置中 */
 .field-birthday::-webkit-calendar-picker-indicator {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  align-self: center;
 }
