@@ -318,7 +318,7 @@
   /* 使用 flex 包裝生日與身分（透過 row 自適應並排） */
   .edit-row {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: 1fr 0.7fr;
     grid-template-areas:
       "avatar avatar"
       "name name"
