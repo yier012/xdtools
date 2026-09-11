@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="admin.css">
 </head>
@@ -38,10 +40,10 @@
       <h2 class="section-title">生日名單</h2>
 
       <div class="edit-list-header">
-        <span>頭貼網址</span>
+        <span>頭貼照片</span>
         <span>暱稱</span>
         <span>生日</span>
-        <span>會開車</span>
+        <span>身分</span>
         <span></span>
       </div>
       <div id="member-edit-list" class="edit-list"></div>
@@ -53,6 +55,18 @@
         <span id="save-status" class="save-status"></span>
       </div>
     </section>
+  </div>
+
+  <div id="crop-modal" class="crop-modal" hidden>
+    <div class="crop-modal-inner">
+      <div class="crop-image-wrapper">
+        <img id="crop-image" src="" alt="">
+      </div>
+      <div class="crop-modal-actions">
+        <button type="button" id="crop-cancel-btn" class="crop-cancel-btn">取消</button>
+        <button type="button" id="crop-confirm-btn" class="crop-confirm-btn">確定</button>
+      </div>
+    </div>
   </div>
 
   <script src="admin.js"></script>

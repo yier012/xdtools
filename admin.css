@@ -82,6 +82,94 @@
   font-size: 12px;
 }
 
+.avatar-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-preview {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #33324A;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.avatar-file-input {
+  min-width: 0;
+  flex: 1;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.crop-modal-inner {
+  background: #1E1E2E;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.crop-image-wrapper {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.crop-image-wrapper img {
+  max-width: 100%;
+  display: block;
+}
+
+.crop-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.crop-cancel-btn,
+.crop-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.crop-cancel-btn {
+  background: transparent;
+  border: 1.5px solid #3A3A4A;
+  color: var(--muted);
+}
+
+.crop-confirm-btn {
+  background: var(--yellow);
+  color: var(--yellow-text);
+}
+
 .edit-row input {
   padding: 8px 10px;
   border-radius: 8px;
@@ -148,9 +236,9 @@
       "name birthday"
       "role delete";
   }
-  .edit-row input:nth-child(1) { grid-area: avatar; }
-  .edit-row input:nth-child(2) { grid-area: name; }
-  .edit-row input:nth-child(3) { grid-area: birthday; }
+  .edit-row .avatar-cell { grid-area: avatar; }
+  .edit-row .field-name { grid-area: name; }
+  .edit-row .field-birthday { grid-area: birthday; }
   .edit-row .field-role { grid-area: role; justify-self: start; }
   .edit-row .delete-btn { grid-area: delete; justify-self: end; }
 }

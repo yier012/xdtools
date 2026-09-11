@@ -57,16 +57,33 @@ function buildMemberRow(member, index) {
   const row = document.createElement('div');
   row.className = 'edit-row';
 
-  const avatarInput = document.createElement('input');
-  avatarInput.type = 'text';
-  avatarInput.placeholder = '頭貼網址(選填)';
-  avatarInput.value = member.avatarUrl || '';
-  avatarInput.addEventListener('input', (e) => {
-    state.members[index].avatarUrl = e.target.value;
+  const avatarCell = document.createElement('div');
+  avatarCell.className = 'avatar-cell';
+
+  const avatarPreview = document.createElement('div');
+  avatarPreview.className = 'avatar-preview';
+  updateAvatarPreview(avatarPreview, member);
+
+  const avatarFileInput = document.createElement('input');
+  avatarFileInput.type = 'file';
+  avatarFileInput.accept = 'image/*';
+  avatarFileInput.className = 'avatar-file-input';
+  avatarFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    openCropModal(file, (croppedDataUrl) => {
+      state.members[index].avatarUrl = croppedDataUrl;
+      updateAvatarPreview(avatarPreview, state.members[index]);
+    });
+    avatarFileInput.value = '';
   });
+
+  avatarCell.appendChild(avatarPreview);
+  avatarCell.appendChild(avatarFileInput);
 
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
+  nameInput.className = 'field-name';
   nameInput.placeholder = '暱稱';
   nameInput.value = member.name || '';
   nameInput.addEventListener('input', (e) => {
@@ -75,6 +92,7 @@ function buildMemberRow(member, index) {
 
   const birthdayInput = document.createElement('input');
   birthdayInput.type = 'date';
+  birthdayInput.className = 'field-birthday';
   birthdayInput.value = member.birthday || '';
   birthdayInput.addEventListener('input', (e) => {
     state.members[index].birthday = e.target.value;
@@ -109,7 +127,7 @@ function buildMemberRow(member, index) {
     renderEditList();
   });
 
-  row.appendChild(avatarInput);
+  row.appendChild(avatarCell);
   row.appendChild(nameInput);
   row.appendChild(birthdayInput);
   row.appendChild(roleSelect);
@@ -117,6 +135,89 @@ function buildMemberRow(member, index) {
 
   return row;
 }
+
+function updateAvatarPreview(previewEl, member) {
+  if (member.avatarUrl) {
+    previewEl.style.backgroundImage = `url("${member.avatarUrl}")`;
+    previewEl.textContent = '';
+  } else {
+    previewEl.style.backgroundImage = 'none';
+    previewEl.textContent = member.name ? member.name[0] : '?';
+  }
+}
+
+// 把選到的圖片縮小到最長邊不超過 maxSize,轉成 JPEG 的 base64 字串,
+// 這樣才不會一張原圖幾 MB 直接塞進資料庫。
+function resizeCanvasToDataUrl(canvas, maxSize) {
+  let { width, height } = canvas;
+
+  if (width > height && width > maxSize) {
+    height = Math.round(height * (maxSize / width));
+    width = maxSize;
+  } else if (height >= width && height > maxSize) {
+    width = Math.round(width * (maxSize / height));
+    height = maxSize;
+  }
+
+  const resizedCanvas = document.createElement('canvas');
+  resizedCanvas.width = width;
+  resizedCanvas.height = height;
+  resizedCanvas.getContext('2d').drawImage(canvas, 0, 0, width, height);
+
+  return resizedCanvas.toDataURL('image/jpeg', 0.85);
+}
+
+// ---- 裁切彈窗 ----
+const cropModal = document.getElementById('crop-modal');
+const cropImage = document.getElementById('crop-image');
+const cropCancelBtn = document.getElementById('crop-cancel-btn');
+const cropConfirmBtn = document.getElementById('crop-confirm-btn');
+
+let activeCropper = null;
+let onCropDone = null;
+
+function openCropModal(file, callback) {
+  onCropDone = callback;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    cropImage.src = event.target.result;
+    cropModal.hidden = false;
+
+    if (activeCropper) {
+      activeCropper.destroy();
+    }
+    activeCropper = new Cropper(cropImage, {
+      aspectRatio: 1,
+      viewMode: 1,
+      background: false,
+      autoCropArea: 1,
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+function closeCropModal() {
+  cropModal.hidden = true;
+  if (activeCropper) {
+    activeCropper.destroy();
+    activeCropper = null;
+  }
+  onCropDone = null;
+}
+
+cropCancelBtn.addEventListener('click', closeCropModal);
+
+cropConfirmBtn.addEventListener('click', () => {
+  if (!activeCropper || !onCropDone) return;
+
+  const canvas = activeCropper.getCroppedCanvas({ width: 300, height: 300 });
+  const dataUrl = resizeCanvasToDataUrl(canvas, 200);
+
+  const callback = onCropDone;
+  closeCropModal();
+  callback(dataUrl);
+});
 
 addBtn.addEventListener('click', () => {
   state.members.push({
