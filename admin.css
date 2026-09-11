@@ -2,102 +2,82 @@
    基礎與登入介面
 ======================== */
 .login-view {
-  max-width: 340px;
+  max-width: 320px;
   margin: 60px auto 0;
-  padding: 0 16px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background: #1E1E2E;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid #2D2D3F;
+  gap: 10px;
 }
 
 .login-form label {
   font-size: 13px;
   color: var(--muted);
-  font-weight: 500;
 }
 
 .login-form input {
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid #3A3A4A;
-  background: #14141F;
+  background: #1E1E2E;
   color: var(--ink);
-  font-size: 15px;
-  transition: border-color 0.2s ease;
-}
-
-.login-form input:focus {
-  border-color: var(--yellow);
-  outline: none;
+  font-size: 14px;
 }
 
 .login-form button {
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 10px;
   border: none;
   background: var(--yellow);
   color: var(--yellow-text);
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
-  margin-top: 6px;
 }
 
 .login-error {
   color: var(--coral);
   font-size: 13px;
   min-height: 18px;
-  margin: 2px 0 0;
+  margin: 4px 0 0;
 }
 
 .section-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 24px 0 14px;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 24px 0 12px;
 }
 
 /* ========================
-   成員列表 (電腦版)
+   成員列表 (電腦版預設 5 欄)
 ======================== */
 .edit-list-header {
   display: grid;
-  grid-template-columns: 140px 1.2fr 140px 120px 48px;
-  gap: 12px;
-  padding: 0 14px;
+  grid-template-columns: 1fr 1fr 130px 105px 60px;
+  gap: 8px;
+  padding: 0 10px;
   margin-bottom: 8px;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
 }
 
 .edit-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .edit-row {
-  position: relative;
   display: grid;
-  grid-template-columns: 140px 1.2fr 140px 120px 48px;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr 130px 105px 60px;
+  gap: 8px;
   align-items: center;
   background: #1E1E2E;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 1px solid #2A2A3C;
+  padding: 10px;
+  border-radius: 12px;
   min-width: 0;
-  transition: border-color 0.2s ease;
-}
-
-.edit-row:hover {
-  border-color: #3A3A4E;
 }
 
 .edit-row > * {
@@ -112,28 +92,28 @@
 }
 
 .avatar-preview {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background-color: #2D2D3F;
+  background-color: #33324A;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--ink);
   flex-shrink: 0;
-  border: 1.5px solid #3A3A4A;
 }
 
+/* 更換照片按鈕：確保點擊能穿透到 file input */
 .avatar-upload-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #3A3A4A;
   background: #14141F;
@@ -141,12 +121,7 @@
   font-size: 12px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.avatar-upload-btn:hover {
-  border-color: #55556B;
-  color: var(--ink);
+  overflow: hidden;
 }
 
 .avatar-file-input {
@@ -156,6 +131,7 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 2; /* 確保在最上層可被點選觸發 */
 }
 
 .field-group {
@@ -168,21 +144,15 @@
 
 .edit-row input,
 .edit-row select {
-  height: 38px;
-  padding: 0 10px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #3A3A4A;
   background: #14141F;
   color: var(--ink);
   font-size: 13px;
+  min-width: 0;
   width: 100%;
   box-sizing: border-box;
-}
-
-.edit-row input:focus,
-.edit-row select:focus {
-  border-color: var(--yellow);
-  outline: none;
 }
 
 .delete-btn {
@@ -192,59 +162,38 @@
   font-size: 13px;
   cursor: pointer;
   padding: 6px;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.delete-btn:hover {
-  opacity: 1;
-}
-
-/* ========================
-   按鈕與操作列
-======================== */
 .add-btn {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
   border: 1.5px dashed #3A3A4A;
-  background: rgba(30, 30, 46, 0.4);
+  background: transparent;
   color: var(--muted);
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
   width: 100%;
-  transition: all 0.2s ease;
-}
-
-.add-btn:hover {
-  border-color: #5A5A72;
-  color: var(--ink);
-  background: #1E1E2E;
 }
 
 .save-bar {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: 20px;
 }
 
 .save-btn {
-  padding: 12px 24px;
+  padding: 10px 16px;
   border-radius: 10px;
   border: none;
   background: var(--sky);
   color: var(--sky-text);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.save-btn:hover {
-  opacity: 0.9;
 }
 
 .save-status {
@@ -253,180 +202,153 @@
 }
 
 /* ========================
-   手機專用卡片化 UI (RWD)
+   裁切彈窗
 ======================== */
-@media (max-width: 600px) {
-  /* 隱藏電腦版表頭 */
+.crop-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.crop-modal[hidden] {
+  display: none;
+}
+
+.crop-modal-inner {
+  background: #1E1E2E;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.crop-image-wrapper {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.crop-image-wrapper img {
+  max-width: 100%;
+  display: block;
+}
+
+.crop-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.crop-cancel-btn,
+.crop-confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.crop-cancel-btn {
+  background: transparent;
+  border: 1.5px solid #3A3A4A;
+  color: var(--muted);
+}
+
+.crop-confirm-btn {
+  background: var(--yellow);
+  color: var(--yellow-text);
+}
+
+
+/* ===================================================
+   手機版專屬樣式 (嚴格限制在 max-width: 560px 內生效)
+=================================================== */
+@media (max-width: 560px) {
   .edit-list-header {
     display: none;
   }
 
-  /* 整張卡片改為垂直流式排列，避免 Grid 欄位打架擠壓 */
-  .edit-row {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 14px;
-    background: #1E1E2E;
-    border: 1px solid #2D2D3F;
-    position: relative;
-  }
-
-  /* 
-    第 1 排：頭貼區塊 + 刪除按鈕
-    兩者水平分置兩側，並且垂直完全對齊置中
-  */
-  .avatar-cell {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: auto;
-  }
-
-  /* 移除原本的絕對定位，改用 flex 讓它跟頭貼同一水平線 */
-  .delete-btn {
-    position: static;
-    margin-left: auto; /* 自動推到最右側 */
-    padding: 6px 12px;
-    height: 34px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: rgba(235, 87, 87, 0.12);
-    color: var(--coral);
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  /* 
-    第 2 排：暱稱 (長) + 身分 (短)
-    用一個小 grid 或 flex 讓暱稱和身分在同一列
+  /* 3 排佈局：
+     第 1 排: 頭貼/換照片 (左) + 刪除 (右)
+     第 2 排: 暱稱 (長) + 身分 (短 100px)
+     第 3 排: 生日 (全寬)
   */
   .edit-row {
-    /* 這裡透過 grid 定義三列：頂部(頭貼+刪除)、暱稱身分列、生日列 */
-    display: grid;
-    grid-template-columns: 1fr 105px; /* 身分固定 105px，暱稱吃滿剩下的寬度 */
+    grid-template-columns: 1fr 100px;
     grid-template-areas:
       "avatar delete"
       "name   role"
       "bday   bday";
     gap: 12px 10px;
+    padding: 14px;
   }
 
-  /* 分配各個區域對應的位置 */
-  .avatar-cell {
+  .edit-row .avatar-cell {
     grid-area: avatar;
     justify-self: start;
-    align-self: center;
+    align-self: center; /* 與刪除按鈕水平置中對齊 */
   }
 
-  .delete-btn {
+  .edit-row .delete-btn {
     grid-area: delete;
     justify-self: end;
-    align-self: center;
-    margin-left: 0;
+    align-self: center; /* 與頭貼按鈕水平置中對齊 */
+    padding: 6px 10px;
+    background: rgba(235, 87, 87, 0.12);
+    border-radius: 8px;
+    font-size: 12px;
   }
 
   .field-group--name {
     grid-area: name;
-    min-width: 0;
   }
 
   .field-group--role {
     grid-area: role;
-    min-width: 0;
   }
 
-  /* 第 3 排：生日自己整排 (跨滿兩欄) */
   .field-group--birthday {
     grid-area: bday;
     width: 100%;
-    min-width: 0;
   }
 
-  /* 欄位標籤 */
   .field-label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
-  /* 輸入框與選單高度優化，防止 iOS 預設樣式溢出 */
-  .edit-row input,
-  .edit-row select {
-    height: 40px;
-    padding: 0 10px;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
+  /* 修正生日輸入框：不溢出、文字垂直置中 */
+  .edit-row input[type="date"],
+  .field-birthday {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    height: 38px !important;
+    padding: 0 8px !important;
+    font-size: 13px !important;
+    line-height: normal !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
-  /* 儲存列固定吸底，避免名單多時難點擊 */
-  .save-bar {
-    position: sticky;
-    bottom: 16px;
-    background: rgba(20, 20, 31, 0.88);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 10px 14px;
-    border-radius: 12px;
-    border: 1px solid #2D2D3F;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-    z-index: 10;
+  .edit-row input[type="date"]::-webkit-date-and-time-value {
+    text-align: left;
+    margin: 0;
+    line-height: normal;
   }
 
-  .save-btn {
-    flex: 1;
-    height: 42px;
+  .crop-image-wrapper {
+    height: 240px;
   }
-}
-
-/* 1. 解除 Grid 項目被內部內容撐爆的問題 */
-.edit-row > * {
-  min-width: 0;
-}
-
-.field-group--birthday {
-  grid-area: bday;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* 2. 修正 date input 本身與 WebKit 預設元件寬度 */
-.field-birthday {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  -webkit-appearance: none;
-  appearance: none;
-  
-  /* 關鍵修正：用 Flex 讓內容與圖標垂直置中 */
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: flex-start;
-  
-  /* 解除固定行高造成的向上偏移 */
-  line-height: normal !important;
-  padding: 0 10px !important;
-  height: 40px !important;
-}
-
-/* 修正 WebKit 內部文字區塊的對齊與邊距 */
-.field-birthday::-webkit-date-and-time-value {
-  text-align: left;
-  line-height: normal;
-  margin: 0;
-  padding: 0;
-}
-
-/* 日曆小圖標也垂直置中 */
-.field-birthday::-webkit-calendar-picker-indicator {
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  align-self: center;
 }
