@@ -15,6 +15,10 @@
   --sky: #4FC3E8;
   --sky-text: #042C53;
   --sky-sub: #0C447C;
+
+  --purple: #B388FF;
+  --purple-text: #260B4D;
+  --purple-sub: #451E7E;
 }
 
 * {
@@ -128,6 +132,12 @@ body {
 }
 .card--sky .card-sub { color: var(--sky-sub); }
 
+.card--purple {
+  background: var(--purple);
+  color: var(--purple-text);
+}
+.card--purple .card-sub { color: var(--purple-sub); }
+
 .card--soon {
   background: transparent;
   border: 1.5px dashed #6E6C7C;
@@ -145,4 +155,49 @@ body {
   .logo {
     font-size: 26px;
   }
+}
+
+/* 驚喜合輯專屬列表樣式 */
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.link-btn-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: var(--card-radius);
+  background: #1E1E2E;
+  border: 1px solid #2D2D3F;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.link-btn-card:hover {
+  transform: translateY(-2px);
+  border-color: #3E3E55;
+  background: #252538;
+}
+
+.link-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.link-btn-icon {
+  display: flex;
+  color: var(--yellow);
+}
+
+.link-btn-arrow {
+  color: var(--muted);
+  display: flex;
 }
