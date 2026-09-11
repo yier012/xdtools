@@ -383,3 +383,32 @@
     height: 42px;
   }
 }
+
+/* 1. 解除 Grid 項目被內部內容撐爆的問題 */
+.edit-row > * {
+  min-width: 0;
+}
+
+.field-group--birthday {
+  grid-area: bday;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* 2. 修正 date input 本身與 WebKit 預設元件寬度 */
+.field-birthday {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none; /* 移除 iOS 內建特殊外觀計算 */
+  appearance: none;
+  display: block;
+}
+
+/* 3. 避免日期右側日曆圖標產生額外的溢出空間 */
+.field-birthday::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
