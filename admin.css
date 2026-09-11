@@ -122,6 +122,10 @@
   padding: 20px;
 }
 
+.crop-modal[hidden] {
+  display: none;
+}
+
 .crop-modal-inner {
   background: #1E1E2E;
   border-radius: 16px;

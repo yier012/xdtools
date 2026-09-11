@@ -89,6 +89,10 @@
   margin-top: 24px;
 }
 
+.cars-view[hidden] {
+  display: none;
+}
+
 .car-box {
   border-radius: 18px;
   padding: 20px;

@@ -9,6 +9,10 @@
   align-items: center;
 }
 
+.draw-view[hidden] {
+  display: none;
+}
+
 .reel {
   width: 100%;
   min-height: 120px;
